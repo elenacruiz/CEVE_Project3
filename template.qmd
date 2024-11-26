@@ -26,7 +26,7 @@ using RainwaterHarvesting         # <2>
 Next, we specify the path to the rainfall data file and read it in.
 
 ```{julia}
-filepath = "data/1.txt" # <1>   
+filepath = "data/18.txt" # <1>   
 rainfall_data = RainfallData(filepath) # <2>
 ```
 
@@ -50,7 +50,12 @@ plot(rainfall_data) # <1>
 
 ### Discussion
 
-*Insert discussion here*
+Each month from january 1994 titl October 2024 have ddata for reainfall each year. This, there are no years or monthss of data that have to be removed for data cleaning. The approximately 30 years of data is plenty suffeient and ccocmplete of a data set to ccontinue meaningful risk assessmnt. According to -- there have been droughts in Caera a nrotheaast part of brazil in the following years: 1979-83, 1987, 1992-93, 1997-98, 2002-03, 2010 and 2012-2018. Theere are dipps inthe rainfall for the graphs in the rainfall for Aurora. THe years that have the most obvious dips are 2002-2003 and the 2012-1018 areaa. 
+
+
+There are also approcimations for the Inflow calcuclations. For example, the first flush volume would flutuaatte depending on how reently itt has rained. It is possible tthe ffirst flush need nott be dddisccarded if the roof is not ddirty ebccaue it haas recently rained. Perhaps the problem couldd be the other waay around andd thee first flushh is very laarge beccause of birdd pooping on the roof. 
+
+
 
 ## Understanding the Theoretical Model
 
@@ -98,6 +103,9 @@ First, the household begins using water from the tank after the 150th day of the
 This is based on the idea that the rainy season lasts for about the first 150 days of the year, and so they may have other sources of water before then.
 The second assumption is that each household consumes 74.1 liters per day during the dry season.
 How does this compare to your household's water usage?
+THe limitations of thtis moel rest on the calaculaations of the consumption equaation. The model aassumes that the ttank is not inuse for the rainy dday seaasons, the first 150 daays of the year whichc is not necessariy acccurate tto real-life. Depending on the size of the family and their ddaily water needs and dif the yeaar is in a ddorught, the tank maay be used before tth 150 daays of the year. Additionally, the water consumption chcanges day-to-day for people. The cconsumption model, however aassumes a household is using 74.1 liters per dday. This does not take into acount the ddaily flutuattions in watter cconsumpiton for faamilies an the human element tthat would leadd familis to use less water wheen they know they will run outt soon for example. 
+Alos, the runoff oefficcient is fxxed, when in reality the amount of waater that is being evaporated for example will change depending on the season and the sun for that day
+the ccoefficne runoff deepends on themateerial as well. 
 
 ## Model Implementation and Testing
 
@@ -105,12 +113,19 @@ How does this compare to your household's water usage?
 
 We can define the model parameters with sensible default values.
 You will have the opportunity to change these values later.
+I create dthe model perameters beacuse it affected my days. For raiin area of 45 and water tank volume of 16000, there were three years out of 50 which is quiite good. However, chcanging the area of the roof to 55 lowers that nnumber to only 1 year of failute. These yars of failrue occured druing dry years whhen the rainfall into the tank  during ddry eyars with less rain was not enough tto last through the dry months. These changes cause the tank to fill  up faster during thee dry months, which wouldd also allow for use of the taank dduring thte raainy season. During many yeaaars modeled, there is overflow in the tank for about the perio of aboutt ttwo months. With the larger area of roof, the tank fills faster aand would allow more use fo water dduring th erainy season if that perameter aand usage of water was taken into accocunt. 
+
+The reliability off the system is 50-49/50 which amount to aa 98% reliability. 
+
+Gaps: there are gaaps int he moddl when faced with the assumpitons of no cconsumpttion over the dry monhts and the cconstant cconsumption ddaaily during the dry months. To address this gap, we woul dhaave to ccolelct daata on the average use of water during the rainy season. This would enhance the anaalysis bccasue It would provide a more aacccurate result of the tank levels at the endd of the rainy season and throughout the wet season rather than aa graph with a linear line.
+
+One gap in the methodds is the runoff ccoceffienct tath is base on the 
 
 ```{julia}
 #| output: false
 param = ModelParameters(          # <1>
     runoff_coefficient=0.85,      # <2>
-    roof_area_m2=45.0,            # <3>
+    roof_area_m2=55.0,            # <3>
     first_flush_mm=2.0,           # <4>
     tank_capacity_L=16000.0       # <5>
 )
